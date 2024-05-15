@@ -1,0 +1,5 @@
+environment_name: opinion-prod
+opinion_replication_dao_url: jdbc:mysql://mysql.opinion-stg.local:3306/opinion?characterset=utf8
+cms_dao_url: jdbc:mysql://mysql.opinion-stg.local:3306/opinion_cms?characterset=utf8
+market_dao_url: jdbc:mysql://mysql.opinion-stg.local:3306/market?characterset=utf8
+office_dao_url: jdbc:mysql://mysql.opinion-stg.local:3306/office?characterset=utf8

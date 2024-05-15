@@ -43,13 +43,5 @@
 			<DefaultRolloverStrategy max="10"/>
 		</RollingFile>
 	</Appenders>
-	<Loggers>
-		<Logger name="com.mchange" level="warn" additivity="false">
-			<AppenderRef ref="RollingFile" />
-		</Logger>
-		<Root level="info">
-			<AppenderRef ref="RollingFile" />
-			<AppenderRef ref="discord" level="WARN"/>
-		</Root>
-	</Loggers>
+	<xi:include href="{{ internal_base_url }}/log4j2/opinion-jetty-loggers.xml"/>
 </Configuration>

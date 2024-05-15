@@ -10,3 +10,4 @@ app_user: opinion
 app_group: opinion
 remote_app_content_list: []
 #base_path: "/opt/opinion"
+internal_base_url: https://internal-opinion-stg.s3.il-central-1.amazonaws.com
