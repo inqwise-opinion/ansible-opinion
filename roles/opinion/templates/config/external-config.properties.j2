@@ -1,0 +1,80 @@
+opinionReplication.dao.url = {{ opinionReplication_dao_url }}
+opinionReplication.dao.driver = com.mysql.cj.jdbc.Driver
+opinionReplication.dao.username = {{ mysql_dao_username }}
+opinionReplication.dao.password = {{ mysql_dao_password }}
+
+cms.dao.url = {{ cms_dao_url }}
+cms.dao.driver = com.mysql.cj.jdbc.Driver
+cms.dao.username = {{ mysql_dao_username }}
+cms.dao.password = {{ mysql_dao_password }}
+
+market.dao.url = {{ market_dao_url }}
+market.dao.driver = com.mysql.cj.jdbc.Driver
+market.dao.username = {{ mysql_dao_username }}
+market.dao.password = {{ mysql_dao_password }}
+
+office.dao.url = {{ office_dao_url }}
+office.dao.driver = com.mysql.cj.jdbc.Driver
+office.dao.username = {{ mysql_dao_username }}
+office.dao.password = {{ mysql_dao_password }}
+
+#General
+general.enableGoogleAnalytics = false
+
+#Gate
+#opinion.url = http://localhost:8080/deltaintegrity-opinion
+#opinion.secureUrl = https://localhost:8443/deltaintegrity-opinion
+#website.url = http://www.deltaintegrity.com
+#customerZone.url = http://localhost:8080/deltaintegrity-customerzone
+#opinion.collector.url = http://localhost:8080/deltaintegrity-opinion-collector
+#opinion.collector.url = http://localhost:8080/deltaintegrity-opinion-collector
+#opinion.collector.secureUrl = https://localhost:8443/deltaintegrity-opinion-collector
+#htmlto.url = http://localhost:8080/deltaintegrity-htmlto
+#api.url = http://localhost:8081
+#api.url = https://localhost
+#api.url = http://localhost:8081
+#api.secureUrl = https://localhost
+#api.secureUrl = https://localhost:444 
+
+#ProductIds
+#opinion.id = 4f759655-9a12-474d-9ff3-1e0482f029db
+#backoffice.id = 8c9c0962-e945-48bc-a97f-4a010ac88b10
+
+#Validations
+#validation.isPassCapchaValidation = true
+
+#System templates folders
+#opinion.systemTemplatesFolder = /Users/basilg/Documents/workspace/deltaintegrity-systemTemplates/opinion
+#office.systemTemplatesFolder = /Users/basilg/Documents/workspace/deltaintegrity-systemTemplates/office
+#cms.systemTemplatesFolder = /Users/basilg/Documents/workspace/deltaintegrity-systemTemplates/opinion-cms
+
+#GeoIp
+geoip.path = {{ config_base_path }}/GeoLite2-Country.mmdb
+
+#Sesion Domain
+#opinion.sessionDomain = www.inqwise.com
+#backoffice.sessionDomain = backoffice.inqwise.com
+
+#Payments
+paypal.config-path = /Users/basilg/Documents/config/paypal_config.properties
+paypal.service-url = https://www.sandbox.paypal.com/webscr&cmd=
+
+#External Collectors
+cint.api-token = 2947512246703
+cint.secret = yRuYr62F6qdCp
+cint.end-point = https://%s.cds.cintworks.net
+
+#Cross-domain
+#domain = inqwise-stg.com
+
+#SocialAuth
+#socialauth.config-path = /Users/basilg/Documents/config/oauth_consumer.properties
+
+
+#Static url
+#static.url = //dzap5fl97ni3h.cloudfront.net
+#static.url = //static.inqwise.net.s3.amazonaws.com 
+
+
+#Infinispan
+infinispan.config-path = /Users/basilg/Documents/config/infinispan.xml

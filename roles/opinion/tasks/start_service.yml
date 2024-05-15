@@ -1,0 +1,44 @@
+---
+# reload and start service 
+
+# - name: running command add log4j2
+#   ansible.builtin.command: /usr/bin/java -jar /data/opinion/jetty/start.jar --add-to-start=logging-log4j2
+      
+- name: Reload jetty systemd
+  systemd:
+    name: jetty
+    state: reloaded
+  tags: configuration
+        
+- name: Start and enable the jetty service
+  systemd:
+    name: jetty
+    state: started
+    enabled: yes
+  tags: configuration
+
+- name: Reload opinion_api systemd
+  systemd:
+    name: opinion-api
+    state: reloaded
+  tags: configuration
+        
+- name: Start and enable the opinion_api service
+  systemd:
+    name: opinion-api
+    state: started
+    enabled: yes
+  tags: configuration
+
+- name: Reload opinion_automation systemd
+  systemd:
+    name: opinion-automation
+    state: reloaded
+  tags: configuration
+        
+- name: Start and enable the opinion_automation service
+  systemd:
+    name: opinion-automation
+    state: started
+    enabled: yes
+  tags: configuration

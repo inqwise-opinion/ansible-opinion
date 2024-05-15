@@ -1,0 +1,44 @@
+---
+# log base folder
+- name: create log base folder
+  file:
+    path: '{{ logs_full_path }}'
+    owner: '{{ user }}' 
+    group: '{{ group }}'
+    mode: '41774'
+    state: directory
+  tags: installation
+
+- name: create scripts base folder
+  file:
+    path: '{{ scripts_full_path }}'
+    owner: '{{ user }}' 
+    group: '{{ group }}'
+    mode: '41774'
+    state: directory
+  tags: configuration
+
+- name: copy synclogs_tos3.sh to scripts folder
+  template: 
+    src: "synclogs_tos3.sh.j2"
+    dest: "{{ scripts_full_path }}/synclogs_tos3.sh"
+  tags: configuration
+
+- name: Install cornie
+  ansible.builtin.package:
+    name: cronie
+    state: present
+  tags: installation
+
+- name: Make sure a service cornie is running
+  ansible.builtin.systemd_service:
+    state: started
+    name: crond.service
+  tags: installation
+
+- name: create logs to s3 sync job
+  ansible.builtin.cron:
+    name: "logs to s3 sync"
+    minute: "*/5"
+    job: "{{ scripts_full_path }}/synclogs_tos3.sh"
+  tags: configuration

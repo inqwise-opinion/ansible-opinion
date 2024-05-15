@@ -1,0 +1,53 @@
+---
+- name: check jetty exist
+  stat:
+    path: "{{ jetty_base_path }}"
+  register: jetty
+  tags: installation
+
+- name: download jetty from s3
+  command: "aws s3 cp {{ jetty_remote_path }}/ {{ jetty_base_path }} --recursive"
+  when: jetty.stat.exists == False
+  tags: installation
+
+- name: create resource base folder in jetty
+  file:
+    path: '{{ log4j2_jetty_base_path }}'
+    owner: '{{ user }}' 
+    group: '{{ group }}'
+    mode: '41774'
+    state: directory
+  tags: configuration
+
+- name: copy log4j2 libraries
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    dest: "{{ jetty_lib_ext_folder_path }}/"
+  loop:
+    - "{{ slf4j_api_url }}"
+    - "{{ log4j_api_url }}"
+    - "{{ log4j_slf4j_impl_url }}"
+    - "{{ log4j_core_url }}"
+  tags: installation
+
+- name: Copy log4j2 to jetty
+  template:
+    src: jetty/log4j2.jetty.xml.j2
+    dest: "{{ log4j2_jetty_base_path }}/log4j2.jetty.xml"
+    block_start_string: "{$"
+  vars:
+    hostname: "{{ ansible_hostname }}"    
+    instance_private_ip: "{{ ansible_default_ipv4['address'] }}"
+    instance_id: "{{ ec2_instance.id }}"
+    instance_environment_name: "{{ environment_name }}"
+    app_name: "jetty"
+  tags: configuration
+
+- name: Recursively change ownership of a directory
+  ansible.builtin.file:
+    path: "{{ jetty_base_path }}"
+    state: directory
+    recurse: yes
+    owner: "{{ user }}"
+    group: "{{ group }}"
+  tags: configuration

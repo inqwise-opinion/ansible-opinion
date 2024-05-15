@@ -1,0 +1,27 @@
+---
+- name: create app base folder
+  file:
+    path: '{{ base_path }}'
+    owner: '{{ user }}' 
+    group: '{{ group }}'
+    mode: '41774'
+    state: directory
+  tags: installation
+
+- name: create config base folder
+  file:
+    path: '{{ config_base_path }}'
+    owner: '{{ user }}' 
+    group: '{{ group }}'
+    mode: '41774'
+    state: directory
+  tags: installation
+
+- name: create apps base folder
+  file:
+    path: '{{ apps_full_path }}'
+    owner: '{{ user }}' 
+    group: '{{ group }}'
+    mode: '41774'
+    state: directory
+  tags: installation

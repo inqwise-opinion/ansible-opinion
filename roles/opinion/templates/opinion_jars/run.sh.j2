@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+DIR="{{ dir_name }}"
+JAR="{{ jar_name }}"
+MAINCLASS="{{ mainclass_name }}"
+
+cd "$DIR"
+echo "$DIR"
+
+java -classpath "$DIR:$JAR" "$MAINCLASS"

@@ -1,0 +1,19 @@
+---
+- import_role:
+    name: aws
+  vars:
+    dns_record_list:
+    - name: "{{ private_dns }}.{{ private_domain }}"
+      zone: "{{ private_domain }}"
+      type: A
+      value: "{{ private_ip }}"
+      private: true
+      ttl: 120
+
+    - include_role:
+        name: deploy_app
+      vars:
+        user: "{{ app_user }}"
+        group: "{{ app_group }}"
+        collaboration_base: "{{ opinion_base_path }}"
+   

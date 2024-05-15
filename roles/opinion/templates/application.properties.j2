@@ -1,0 +1,8 @@
+externalConfig = {{ external_config_path }}
+
+{% if cms_portal_name is defined %}
+    cms.portal_name = {{ cms_portal_name }}
+{% endif %}
+{% if general_product_id is defined %}
+    general.productId = {{ general_product_id }}
+{% endif %}

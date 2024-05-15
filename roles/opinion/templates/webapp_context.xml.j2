@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure_9_3.dtd">
+
+<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+  <!-- Enable classloader isolation -->
+  <Set name="parentLoaderPriority">false</Set>
+  <Set name="contextPath">/{{ app_name }}</Set> 
+  <Set name="war">{{ war_path }}</Set>
+  <Set name="extraClasspath">{{ app_base_path }}/</Set>
+</Configure>

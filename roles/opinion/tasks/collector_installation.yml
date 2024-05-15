@@ -1,0 +1,54 @@
+---
+- name: create collector base folder
+  file:
+    path: '{{ opinion_app_collector_base_path }}'
+    owner: '{{ user }}' 
+    group: '{{ group }}'
+    mode: '41774'
+    state: directory
+  tags: installation
+
+- name: Copy collector.xml to webapps folder
+  template:
+    src: webapp_context.xml.j2
+    dest: "{{ webapps_base_path }}/{{ opinion_app_collector_name }}.xml"
+  vars:
+    war_path: "{{ opinion_app_collector_base_path }}/{{ opinion_app_collector_name }}.war"
+    app_name: "{{ opinion_app_collector_name }}"
+    app_base_path: "{{ opinion_app_collector_base_path }}"
+  tags: configuration
+
+- name: copy opinion_app_collector from s3 to collector folder
+  command: "aws s3 cp {{ latest_remote_path }}/{{ opinion_app_collector_name }}.war {{ opinion_app_collector_base_path }}"
+  tags: installation
+
+- name: Copy log4j2 to collector folder
+  template:
+    src: log4j2.xml.j2
+    dest: "{{ opinion_app_collector_base_path }}/log4j2.xml"
+    block_start_string: "{$"
+  vars:
+    hostname: "{{ ansible_hostname }}"    
+    instance_private_ip: "{{ ansible_default_ipv4['address'] }}"
+    instance_id: "{{ ec2_instance.id }}"
+    instance_environment_name: "{{ environment_name }}"
+    app_name: "{{ collector_app_name }}"
+  tags: configuration
+
+- name: Copy application.properties to collector folder
+  template:
+    src: application.properties.j2
+    dest: "{{ opinion_app_collector_base_path }}/application.properties"
+  vars:
+    external_config_path: "{{ external_config_war_path }}"
+    general_product_id: "{{ collector_general_product_id }}"
+  tags: configuration
+
+- name: Recursively change ownership of collector directory
+  ansible.builtin.file:
+    path: "{{ opinion_app_collector_base_path }}"
+    state: directory
+    recurse: yes
+    owner: "{{ user }}"
+    group: "{{ group }}"
+  tags: configuration

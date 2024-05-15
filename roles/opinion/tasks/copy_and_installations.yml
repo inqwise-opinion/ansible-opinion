@@ -1,0 +1,31 @@
+---
+# copy config
+- name: Copy c3pO
+  template:
+    src: config/c3p0.xml.j2
+    dest: "{{ config_base_path }}/c3p0.xml"
+  tags: configuration
+
+- name: Copy external_config
+  template:
+    src: config/external-config.properties.j2
+    dest: "{{ config_base_path }}/external-config.properties"
+  tags: configuration
+
+- name: Copy quartz
+  template:
+    src: config/quartz.properties.j2
+    dest: "{{ config_base_path }}/quartz.properties"
+  tags: configuration
+
+# copy service
+- name: Copy jetty.service 
+  template:
+    src: jetty/jetty.service.j2
+    dest: /etc/systemd/system/jetty.service
+  tags: configuration
+
+# copy geolite2 file
+- name: download GeoLite2 from s3
+  command: "aws s3 cp {{ geolite2_remote_path }} {{ config_base_path }}/{{ geolite2_file_name }}"
+  tags: installation

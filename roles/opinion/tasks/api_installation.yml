@@ -1,0 +1,66 @@
+---
+- name: create api base folder
+  file:
+    path: '{{ opinion_app_api_base_path }}'
+    owner: '{{ user }}' 
+    group: '{{ group }}'
+    mode: '41774'
+    state: directory
+  tags: installation
+
+- name: copy opinion_app_admin from s3 to admin
+  command: "aws s3 cp {{ latest_remote_path }}/{{ opinion_app_api_name }}-fat.jar {{ opinion_app_api_base_path }}"
+  tags: installation
+
+- name: Copy log4j2 to admin folder
+  template:
+    src: log4j2.xml.j2
+    dest: "{{ opinion_app_api_base_path }}/log4j2.xml"
+    block_start_string: "{$"
+  vars:
+    hostname: "{{ ansible_hostname }}"    
+    instance_private_ip: "{{ ansible_default_ipv4['address'] }}"
+    instance_id: "{{ ec2_instance.id }}"
+    instance_environment_name: "{{ environment_name }}"
+    app_name: "{{ api_app_name }}"
+  tags: configuration
+
+- name: Copy application.properties to admin folder
+  template:
+    src: application.properties.j2
+    dest: "{{ opinion_app_api_base_path }}/application.properties"
+  vars:
+    external_config_path: "{{ external_config_jar_path }}"
+    general_product_id: "{{ api_general_product_id }}"
+  tags: configuration
+
+- name: Copy opinion.service 
+  template:
+    src: opinion_jars/opinion.service.j2
+    dest: /etc/systemd/system/opinion-api.service
+  vars: 
+    app_folder: "{{ opinion_app_api_base_path }}"
+    description_name: "opinion-api"
+  tags: configuration
+
+- name: Copy run.sh to api folder
+  template:
+    src: opinion_jars/run.sh.j2
+    dest: "{{ opinion_app_api_base_path }}/run.sh"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: "0744"
+  vars: 
+    dir_name: "/data/opinion/apps/api/"
+    jar_name: "opinion-app-api-fat.jar"
+    mainclass_name: "com.inqwise.opinion.api.Initializer"
+  tags: configuration
+
+- name: Recursively change ownership of api directory
+  ansible.builtin.file:
+    path: "{{ opinion_app_api_base_path }}"
+    state: directory
+    recurse: yes
+    owner: "{{ user }}"
+    group: "{{ group }}"
+  tags: configuration

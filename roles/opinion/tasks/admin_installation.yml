@@ -1,0 +1,55 @@
+---
+- name: create admin base folder
+  file:
+    path: '{{ opinion_app_admin_base_path }}'
+    owner: '{{ user }}' 
+    group: '{{ group }}'
+    mode: '41774'
+    state: directory
+  tags: installation
+
+- name: Copy admin.xml to webapps folder
+  template:
+    src: webapp_context.xml.j2
+    dest: "{{ webapps_base_path }}/{{ opinion_app_admin_name }}.xml"
+  vars:
+    war_path: "{{ opinion_app_admin_base_path }}/{{ opinion_app_admin_name }}.war"
+    app_name: "{{ opinion_app_admin_name }}"
+    app_base_path: "{{ opinion_app_admin_base_path }}"
+  tags: configuration
+
+- name: copy opinion_app_admin from s3 to admin
+  command: "aws s3 cp {{ latest_remote_path }}/{{ opinion_app_admin_name }}.war {{ opinion_app_admin_base_path }}"
+  tags: installation
+
+- name: Copy log4j2 to admin folder
+  template:
+    src: log4j2.xml.j2
+    dest: "{{ opinion_app_admin_base_path }}/log4j2.xml"
+    block_start_string: "{$"
+  vars:
+    hostname: "{{ ansible_hostname }}"    
+    instance_private_ip: "{{ ansible_default_ipv4['address'] }}"
+    instance_id: "{{ ec2_instance.id }}"
+    instance_environment_name: "{{ environment_name }}"
+    app_name: "{{ admin_app_name }}"
+  tags: configuration
+
+- name: Copy application.properties to admin folder
+  template:
+    src: application.properties.j2
+    dest: "{{ opinion_app_admin_base_path }}/application.properties"
+  vars:
+    external_config_path: "{{ external_config_war_path }}"
+    general_product_id: "{{ admin_general_product_id }}"
+    cms_portal_name: "{{ admin_cms_portal_name }}"
+  tags: configuration
+
+- name: Recursively change ownership of admin directory
+  ansible.builtin.file:
+    path: "{{ opinion_app_admin_base_path }}"
+    state: directory
+    recurse: yes
+    owner: "{{ user }}"
+    group: "{{ group }}"
+  tags: configuration

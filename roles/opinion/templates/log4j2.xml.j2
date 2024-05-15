@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+	<Properties>
+		<Property name="app_name">{{ app_name }}</Property>
+		<Property name="host">{{ hostname }}</Property>
+		<Property name="private_ip">{{ instance_private_ip }}</Property>
+		<Property name="instance_id">{{ instance_id }}</Property>
+		<Property name="environment_name">{{ instance_environment_name }}</Property>
+	</Properties>
+	<Appenders>
+		<Http name="discord" url="{{ discord_webhook_error_log }}">
+			<Property name="Content-Type">application/json</Property>
+			<PatternLayout alwaysWriteExceptions="false">
+				<Pattern>
+				{
+					"username": "${app_name} on ${environment_name}",
+					"avatar_url": "https://github.com/xXkoshmarikXx/asset/blob/master/png%20images/java_error_image3.png?raw=true",
+					"content": "${host} **ip**: ${private_ip} **id**: ${instance_id}",
+					"embeds": [
+						{
+							"title": "%maxLen{%enc{%msg}{JSON}}{100}",
+							"description": "%level{WARN=Warn, DEBUG=Debug, ERROR='Error', TRACE=Trace, INFO=Info} in line: %L",
+							"color": "%level{WARN=16705372, DEBUG=5763719, ERROR=15548997, TRACE=5763719, INFO=5763719}",
+							"fields": [
+								{
+									"name": "error details:",
+									"value": "%maxLen{%enc{%rEx}{JSON}}{900}"
+								}
+							]
+						}
+					]
+				}
+				</Pattern>
+			</PatternLayout>
+		</Http>
+		<RollingFile name="RollingFile" filename="{{ logs_full_path }}/${host}-${app_name}.log" filepattern="{{ logs_full_path }}/${host}-${app_name}%i.log">
+			<PatternLayout pattern="%d %p %c [%t] %m%n"/>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10 MB"/>
+				<OnStartupTriggeringPolicy/>
+			</Policies>
+			<DefaultRolloverStrategy max="10"/>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Logger name="com.mchange" level="warn" additivity="false">
+			<AppenderRef ref="RollingFile" />
+		</Logger>
+		<Root level="info">
+			<AppenderRef ref="RollingFile" />
+			<AppenderRef ref="discord" level="WARN" />
+		</Root>
+	</Loggers>
+</Configuration>

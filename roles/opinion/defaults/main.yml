@@ -1,0 +1,61 @@
+---
+# base paths
+base_path: "/data/opinion"
+logs_full_path: "{{ base_path }}/logs"
+jetty_base_path: "{{ base_path }}/jetty"
+config_base_path: "{{ base_path }}/config"
+apps_full_path: "{{ base_path }}/apps"
+scripts_full_path: "{{ base_path }}/scripts"
+# todo:
+webapps_base_path: "{{ jetty_base_path }}/webapps"
+# todo:
+opinion_app_admin_base_path: "{{ apps_full_path }}/admin"
+opinion_app_collector_base_path: "{{ apps_full_path }}/collector"
+opinion_app_site_base_path: "{{ apps_full_path }}/site"
+opinion_app_api_base_path: "{{ apps_full_path }}/api"
+opinion_app_automation_base_path: "{{ apps_full_path }}/automation"
+log4j2_jetty_base_path: "{{ jetty_base_path }}/resources"
+
+# files
+opinion_app_admin_name: opinion-app-admin
+opinion_app_collector_name: opinion-app-collector
+opinion_app_site_name: opinion-app-site
+opinion_app_api_name: opinion-app-api
+opinion_app_automation_name: opinion-automation-app
+geolite2_file_name: "GeoLite2-Country.mmdb"
+
+# s3
+jetty_remote_path: "s3://resource-opinion-stg/jetty"
+latest_remote_path: s3://artifactory-opinion-stg/latest
+geolite2_remote_path: "s3://resource-opinion-stg/{{ geolite2_file_name }}"
+opinion_app_admin_remote_path: "{{ latest_remote_path }}/{{ opinion_app_admin_name }}.war"
+logs_remote_path: s3://log-opinion-stg/
+
+
+slf4j_api_url: "https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar"
+log4j_api_url: "https://repo1.maven.org/maven2/org/apache/logging/log4j/log4j-api/2.23.1/log4j-api-2.23.1.jar"
+log4j_slf4j_impl_url: "https://repo1.maven.org/maven2/org/apache/logging/log4j/log4j-slf4j-impl/2.23.1/log4j-slf4j-impl-2.23.1.jar"
+log4j_core_url: "https://repo1.maven.org/maven2/org/apache/logging/log4j/log4j-core/2.23.1/log4j-core-2.23.1.jar"
+
+jetty_lib_ext_folder_path: "{{jetty_base_path}}/lib/ext"
+
+# app names
+admin_app_name: admin
+collector_app_name: collector
+site_app_name: site
+api_app_name: api
+automation_app_name: automation
+
+external_config_war_path: "[../config/external-config.properties]"
+external_config_jar_path: "[../../config/external-config.properties]"
+
+
+admin_general_product_id: "38604bba-3441-4696-8989-bba8c6c913bb"
+admin_cms_portal_name: "InqwiseBO"
+
+collector_general_product_id: "4f759655-9a12-474d-9ff3-1e0482f029db"
+
+site_general_product_id: "4f759655-9a12-474d-9ff3-1e0482f029db"
+site_cms_portal_name: "InqwiseFO"
+
+api_general_product_id: "5758e8fb-a27c-4ff9-90c1-17c8486e3a8e"
