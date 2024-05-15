@@ -32,7 +32,7 @@
 
 - name: Copy log4j2 to jetty
   template:
-    src: jetty/log4j2.jetty.xml.j2
+    src: log4j2.xml.j2
     dest: "{{ log4j2_jetty_base_path }}/log4j2.jetty.xml"
     block_start_string: "{$"
   vars:
