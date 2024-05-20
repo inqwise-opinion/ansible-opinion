@@ -42,3 +42,29 @@
     state: started
     enabled: yes
   tags: configuration
+
+- name: Sleep for 2 seconds and continue with play
+  ansible.builtin.wait_for:
+    timeout: 2
+
+- name: Get Service Status
+  ansible.builtin.systemd:
+    name: opinion-api
+  register: opinion_api
+
+- name: Get Service Status
+  ansible.builtin.systemd:
+    name: opinion-automation
+  register: opinion_automation
+
+- debug:
+    msg: 
+    - "opinion-api: {{ opinion_api.status.ActiveState }}"
+    - "opinion-automation: {{ opinion_automation.status.ActiveState }}"
+
+- ansible.builtin.assert:
+    that:
+      - opinion_api.status.ActiveState == "active"
+      - opinion_automation.status.ActiveState == "active"
+    fail_msg: "'opinion-api' or 'opinion_automation' service is inactive"
+    success_msg: "'opinion-api' and 'opinion_automation' service is active"

@@ -23,6 +23,7 @@
     instance_id: "{{ ec2_instance.id }}"
     instance_environment_name: "{{ environment_name }}"
     app_name: "{{ automation_app_name }}"
+    loggers_xml_file: "{{ app_loggers_file_name }}"
   tags: configuration
 
 - name: Copy application.properties to automation folder

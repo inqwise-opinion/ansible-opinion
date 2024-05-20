@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
     echo $PWD
     export VAULT_PASSWORD=#{`op read "op://Security/ansible-vault inqwise-stg/password"`.strip!}
     echo "$VAULT_PASSWORD" > secret
-    bash main.sh -r #{AWS_REGION}
+    bash userdata.sh -r #{AWS_REGION}
     rm secret
   SHELL
   

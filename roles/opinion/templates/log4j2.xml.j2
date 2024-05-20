@@ -6,6 +6,7 @@
 		<Property name="private_ip">{{ instance_private_ip }}</Property>
 		<Property name="instance_id">{{ instance_id }}</Property>
 		<Property name="environment_name">{{ instance_environment_name }}</Property>
+		<Property name="loggers_xml">{{ loggers_xml_file }}</Property>
 	</Properties>
 	<Appenders>
 		<Http name="discord" url="{{ discord_webhook_error_log }}">
@@ -42,5 +43,5 @@
 			<DefaultRolloverStrategy max="10"/>
 		</RollingFile>
 	</Appenders>
-	<xi:include href="{{ internal_base_url }}/log4j2/opinion-loggers.xml"/>
+	<xi:include href="{{ internal_base_url }}/log4j2/${loggers_xml}"/>
 </Configuration>

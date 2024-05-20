@@ -41,6 +41,7 @@
     instance_id: "{{ ec2_instance.id }}"
     instance_environment_name: "{{ environment_name }}"
     app_name: "jetty"
+    loggers_xml_file: "{{ jetty_loggers_file_name }}"
   tags: configuration
 
 - name: Recursively change ownership of a directory
