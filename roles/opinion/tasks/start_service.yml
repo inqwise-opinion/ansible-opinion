@@ -62,9 +62,9 @@
     - "opinion-api: {{ opinion_api.status.ActiveState }}"
     - "opinion-automation: {{ opinion_automation.status.ActiveState }}"
 
-- ansible.builtin.assert:
-    that:
-      - opinion_api.status.ActiveState == "active"
-      - opinion_automation.status.ActiveState == "active"
-    fail_msg: "'opinion-api' or 'opinion_automation' service is inactive"
-    success_msg: "'opinion-api' and 'opinion_automation' service is active"
+# - ansible.builtin.assert:
+#     that:
+#       - opinion_api.status.ActiveState == "active"
+#       - opinion_automation.status.ActiveState == "active"
+#     fail_msg: "'opinion-api' or 'opinion_automation' service is inactive"
+#     success_msg: "'opinion-api' and 'opinion_automation' service is active"

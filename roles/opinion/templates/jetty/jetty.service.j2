@@ -1,0 +1,13 @@
+[Unit]
+Description=jetty
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/java -jar {{ jetty_base_path }}/start.jar
+WorkingDirectory={{ jetty_base_path }}
+User={{ user }}
+Group={{ group }}
+Restart=always
+
+[Install]
+WantedBy=default.target
