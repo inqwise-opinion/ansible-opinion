@@ -46,5 +46,8 @@ Vagrant.configure("2") do |config|
     aws.subnet_id = "subnet-0e6d52693f72347e4"
     #aws.associate_public_ip = true
     aws.iam_instance_profile_name = "bootstrap-role"
+    aws.tags = {
+      Name: "opinion-test-#{Etc.getpwuid(Process.uid).name}"
+    }
   end
 end

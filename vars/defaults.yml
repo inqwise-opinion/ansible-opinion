@@ -1,9 +1,9 @@
 ---
 discord_webhook: https://discord.com/api/webhooks/{{ discord_message_webhook_id }}/{{ discord_message_webhook_token }}
 discord_channel: "#notifications"
-public_dns: opinion
+#public_dns: opinion
 private_dns: opinion
-public_domain: inqwise-stg.com
+#public_domain: inqwise-stg.com
 private_domain: opinion-stg.local
 #private_ip: "{{ ansible_default_ipv4['address'] }}"
 app_user: opinion
