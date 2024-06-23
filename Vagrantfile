@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
     #yum -y erase python3 && amazon-linux-extras install python3.8
     echo $PWD
     export VAULT_PASSWORD=#{`op read "op://Security/ansible-vault inqwise-stg/password"`.strip!}
-    echo "$VAULT_PASSWORD" > secret
+    echo "$VAULT_PASSWORD" > vault_password
     bash main.sh -e "discord_message_owner_name=#{Etc.getpwuid(Process.uid).name}" -r #{AWS_REGION}
     rm secret
   SHELL

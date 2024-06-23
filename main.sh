@@ -11,7 +11,7 @@ if [ -z "$REGION" ];
     then REGION=$(ec2-metadata --availability-zone | sed -n 's/.*placement: \([a-zA-Z-]*[0-9]\).*/\1/p'); 
 fi
 #REGION=$(ec2-metadata --availability-zone | sed -n 's/.*placement: \([a-zA-Z-]*[0-9]\).*/\1/p')
-#echo "region:$REGION"
+echo "region:$REGION"
 
 catch_error () {
     INSTANCE_ID=$(ec2-metadata --instance-id | sed -n 's/.*instance-id: \(i-[a-f0-9]\{17\}\).*/\1/p')
@@ -22,10 +22,10 @@ main () {
     set -euxo pipefail
     pip install -r requirements.txt --user virtualenv --timeout 60
     export PATH=$PATH:~/.local/bin
-    export ANSIBLE_ROLES_PATH="$(pwd)/ansible-galaxy/roles"
+    export ANSIBLE_ROLES_PATH="$(pwd)/ansible-common-collection/roles"
     ansible-galaxy install -p roles -r requirements.yml
-    ansible-playbook --connection=local --inventory 127.0.0.1, --limit 127.0.0.1 main.yml --syntax-check
-    ansible-playbook --connection=local --inventory 127.0.0.1, --limit 127.0.0.1 main.yml -e $EXTRA --vault-password-file vault_password
+    ansible-playbook --connection=local --inventory 127.0.0.1, --limit 127.0.0.1 main.yml --syntax-check --vault-password-file /vault_password
+    ansible-playbook --connection=local --inventory 127.0.0.1, --limit 127.0.0.1 main.yml -e "${EXTRA:=default}" --vault-password-file /vault_password
     # --skip-tags debug
 }
 trap 'catch_error "$ERROR"' ERR
