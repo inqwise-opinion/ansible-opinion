@@ -7,7 +7,13 @@ private_dns: opinion
 private_domain: opinion-stg.local
 #private_ip: "{{ ansible_default_ipv4['address'] }}"
 app_user: opinion
-app_group: opinion
+app_group: "{{ app_user }}"
+users_groups:
+  - name: "{{ app_group }}"
+users:
+  - name: "{{ app_user }}"
+    group: "{{ app_group }}"
+    append: yes
 remote_app_content_list: []
 #base_path: "/opt/opinion"
 internal_base_url: https://internal-opinion-stg.s3.il-central-1.amazonaws.com
