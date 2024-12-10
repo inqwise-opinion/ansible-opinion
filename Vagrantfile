@@ -8,7 +8,7 @@ TOPIC_NAME = "errors"
 ACCOUNT_ID = "992382682634"
 AWS_REGION = "il-central-1"
 MAIN_SH_ARGS = <<MARKER
--e "playbook_name=ansible-opinion discord_message_owner_name=#{Etc.getpwuid(Process.uid).name}" --toolkit-version testing --tags all
+-e "playbook_name=ansible-opinion discord_message_owner_name=#{Etc.getpwuid(Process.uid).name} environment_id=opinion-stg.local"
 MARKER
 Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
