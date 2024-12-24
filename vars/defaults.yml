@@ -1,11 +1,5 @@
 ---
-discord_webhook: https://discord.com/api/webhooks/{{ discord_message_webhook_id }}/{{ discord_message_webhook_token }}
-discord_channel: "#notifications"
-#public_dns: opinion
 private_dns: opinion
-#public_domain: inqwise-stg.com
-private_domain: opinion-stg.local
-#private_ip: "{{ ansible_default_ipv4['address'] }}"
 app_user: opinion
 app_group: "{{ app_user }}"
 users_groups:
@@ -15,6 +9,5 @@ users:
     group: "{{ app_group }}"
     append: yes
 remote_app_content_list: []
-#base_path: "/opt/opinion"
 aws_iam_role: "opinion-role"
 environment_id: "pension-stg.local"

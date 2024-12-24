@@ -3,3 +3,5 @@ opinion_replication_dao_url: jdbc:mysql://mysql.opinion-stg.local:3306/opinion?c
 cms_dao_url: jdbc:mysql://mysql.opinion-stg.local:3306/opinion_cms?characterset=utf8
 market_dao_url: jdbc:mysql://mysql.opinion-stg.local:3306/market?characterset=utf8
 office_dao_url: jdbc:mysql://mysql.opinion-stg.local:3306/office?characterset=utf8
+internal_base_url: https://internal-opinion-stg.s3.il-central-1.amazonaws.com
+private_domain: opinion-stg.local

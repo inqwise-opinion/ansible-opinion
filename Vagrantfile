@@ -42,7 +42,7 @@ Vagrant.configure("2") do |config|
     override.vm.synced_folder common_collection_path, '/vagrant/collections/ansible_collections/inqwise/common', type: :rsync, rsync__exclude: '.git/', disabled: false
     
     aws.region = AWS_REGION
-    aws.security_groups = ["sg-02d831e6ddd0b5c9d","sg-020afd8fd0fa9fd0b"]
+    aws.security_groups = ["sg-020afd8fd0fa9fd0b","sg-02d831e6ddd0b5c9d"]
         # opinion-api
     aws.ami = "ami-009b671c6592c55db"
     aws.instance_type = "t4g.small"
