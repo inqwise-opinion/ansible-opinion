@@ -6,7 +6,7 @@
   tags: installation
 
 - name: download jetty from s3
-  command: "aws s3 cp {{ jetty_remote_path }}/ {{ jetty_base_path }} --recursive"
+  command: "aws s3 cp {{ jetty_remote_path }}/ {{ jetty_base_path }} --recursive --region {{ ec2_instance.region }}"
   when: jetty.stat.exists == False
   tags: installation
 
