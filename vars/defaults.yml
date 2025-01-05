@@ -1,5 +1,6 @@
 ---
 private_dns: opinion
+loki_base_url: "http://loki.{{ private_domain }}:3100"
 app_user: opinion
 app_group: "{{ app_user }}"
 users_groups:
@@ -9,5 +10,4 @@ users:
     group: "{{ app_group }}"
     append: yes
 remote_app_content_list: []
-aws_iam_role: "opinion-role"
-environment_id: "pension-stg.local"
+aws_iam_role: opinion-role

@@ -1,22 +1,32 @@
 ---
 - include_tasks: create_base_folders.yml
+  tags: always
 
 # install jetty to app base folder
 - include_tasks: jetty_installation.yml
+  tags: always
 
 # installation admin
 - include_tasks: admin_installation.yml
+  tags: always
 
 - include_tasks: collector_installation.yml
+  tags: always
 
 - include_tasks: site_installation.yml
+  tags: always
 
 - include_tasks: api_installation.yml
+  tags: always
 
 - include_tasks: automation_installation.yml
+  tags: always
 
 - include_tasks: sync_logs.yml
+  tags: always
 
 - include_tasks: copy_and_installations.yml
+  tags: always
 
 - include_tasks: start_service.yml
+  tags: always

@@ -2,13 +2,15 @@
 # vagrant up --provider=aws
 # vagrant destroy -f && vagrant up --provider=aws
 # vagrant rsync-auto
+# export COMMON_COLLECTION_PATH='~/git/inqwise/ansible/ansible-common-collection'
+# export STACKTREK_COLLECTION_PATH='~/git/inqwise/ansible/ansible-stack-trek'
 
 MAIN_SCRIPT_URL = "https://raw.githubusercontent.com/inqwise/ansible-automation-toolkit/default/main_amzn2023.sh"
 TOPIC_NAME = "errors"
 ACCOUNT_ID = "992382682634"
 AWS_REGION = "il-central-1"
 MAIN_SH_ARGS = <<MARKER
--e "playbook_name=ansible-opinion discord_message_owner_name=#{Etc.getpwuid(Process.uid).name} environment_id=opinion-stg.local"
+-e "playbook_name=ansible-opinion discord_message_owner_name=#{Etc.getpwuid(Process.uid).name} environment_id=opinion-stg.local" --tags "installation,configuration,debug"
 MARKER
 Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
@@ -46,8 +48,8 @@ Vagrant.configure("2") do |config|
         # opinion-api
     aws.ami = "ami-009b671c6592c55db"
     aws.instance_type = "t4g.small"
-    aws.subnet_id = "subnet-0e6d52693f72347e4"
-    #aws.associate_public_ip = true
+    aws.subnet_id = "subnet-0f46c97c53ea11e2e"
+    aws.associate_public_ip = true
     aws.iam_instance_profile_name = "bootstrap-role"
     aws.tags = {
       Name: "opinion-test-#{Etc.getpwuid(Process.uid).name}"
