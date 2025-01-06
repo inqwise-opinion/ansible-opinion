@@ -3,12 +3,12 @@
   stat:
     path: "{{ jetty_base_path }}"
   register: jetty
-  tags: installation
+  tags: configuration
 
 - name: download jetty from s3
-  command: "aws s3 cp {{ jetty_remote_path }}/ {{ jetty_base_path }} --recursive --region {{ ec2_instance.region }}"
+  command: "aws s3 cp {{ jetty_remote_path }}/ {{ jetty_base_path }} --recursive"
   when: jetty.stat.exists == False
-  tags: installation
+  tags: configuration
 
 - name: create resource base folder in jetty
   file:
@@ -28,7 +28,7 @@
     - "{{ log4j_api_url }}"
     - "{{ log4j_slf4j_impl_url }}"
     - "{{ log4j_core_url }}"
-  tags: installation
+  tags: configuration
 
 - name: Copy log4j2 to jetty
   template:
