@@ -11,6 +11,11 @@
         private: true
         ttl: 120
 
+- name: Java role
+  ansible.builtin.include_role:
+    name: inqwise.common.java
+  tags: installation
+
 - name: Include opinion role
   ansible.builtin.include_role:
     name: opinion
@@ -27,8 +32,7 @@
   vars:
     alloy_user_groups:
       - systemd-journal
-    env_file_vars:
-      CUSTOM_ARGS: "--server.http.listen-addr=0.0.0.0:12345 --disable-reporting=true --stability.level=public-preview"
+      - "{{ app_group }}"
     config: |
       loki.write "local" {
         endpoint {
@@ -63,5 +67,40 @@
           "job" = "integrations/node_exporter",
           "app" = "opinion",
         }
+      }
+
+      local.file_match "opinion_log_files" {
+        path_targets = [{"__path__" = "/data/opinion/logs/*.log"}]
+        sync_period = "10s"
+      }
+
+      loki.source.file "opinion_log_files_scrape" {
+        targets    = local.file_match.opinion_log_files.targets
+        forward_to = [loki.process.opinion_log_files_filter.receiver]
+        tail_from_end = true
+      }
+
+      loki.process "opinion_log_files_filter" {
+        stage.multiline {
+          firstline = "^(?P<timestamp>[0-9\\-]{10} [0-9:]{8},[0-9]{3}) (?P<level>[^ ]+)"
+        }
+        stage.regex {
+          expression = "^(?P<timestamp>[0-9\\-]{10} [0-9:]{8},[0-9]{3}) (?P<level>[^ ]+) (?P<logger>[^ ]+) \\[(?P<thread>[^\\]]+)\\] (?P<message>.*)$"
+        }
+        stage.labels {
+          values = {
+            "level" = "level",
+            "logger" = "logger",
+            "timestamp" = "timestamp",
+          }
+        }
+        stage.static_labels {
+          values = {
+            "app" = "opinion",
+          }
+        }
+        forward_to = [
+          loki.write.local.receiver,
+        ]
       }
   tags: always
