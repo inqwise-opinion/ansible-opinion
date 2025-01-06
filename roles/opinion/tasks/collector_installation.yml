@@ -20,7 +20,7 @@
 
 - name: copy opinion_app_collector from s3 to collector folder
   command: "aws s3 cp {{ latest_remote_path }}/{{ opinion_app_collector_name }}.war {{ opinion_app_collector_base_path }}"
-  tags: installation
+  tags: configuration
 
 - name: Copy log4j2 to collector folder
   template:

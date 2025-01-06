@@ -20,7 +20,7 @@
 
 - name: copy opinion_app_admin from s3 to admin
   command: "aws s3 cp {{ latest_remote_path }}/{{ opinion_app_admin_name }}.war {{ opinion_app_admin_base_path }}"
-  tags: installation
+  tags: configuration
 
 - name: Copy log4j2 to admin folder
   template:

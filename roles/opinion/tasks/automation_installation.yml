@@ -10,7 +10,7 @@
 
 - name: copy opinion_appn_automation from s3 to automation
   command: "aws s3 cp {{ latest_remote_path }}/{{ opinion_app_automation_name }}-fat.jar {{ opinion_app_automation_base_path }}"
-  tags: installation
+  tags: configuration
 
 - name: Copy log4j2 to automation folder
   template:

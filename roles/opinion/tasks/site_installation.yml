@@ -20,7 +20,7 @@
 
 - name: copy opinion_app_site from s3 to site folder
   command: "aws s3 cp {{ latest_remote_path }}/{{ opinion_app_site_name }}.war {{ opinion_app_site_base_path }}"
-  tags: installation
+  tags: configuration
 
 - name: Copy log4j2 to site folder
   template:

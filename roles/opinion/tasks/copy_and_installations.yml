@@ -28,4 +28,4 @@
 # copy geolite2 file
 - name: download GeoLite2 from s3
   command: "aws s3 cp {{ geolite2_remote_path }} {{ config_base_path }}/{{ geolite2_file_name }}"
-  tags: installation
+  tags: configuration
