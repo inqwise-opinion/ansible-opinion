@@ -62,3 +62,5 @@ api_general_product_id: "5758e8fb-a27c-4ff9-90c1-17c8486e3a8e"
 
 app_loggers_file_name: "opinion-loggers.xml"
 jetty_loggers_file_name: "opinion-jetty-loggers.xml"
+
+api_url: "https://api.{{ external_domain }}"

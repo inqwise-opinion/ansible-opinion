@@ -5,3 +5,4 @@ market_dao_url: jdbc:mysql://mysql.opinion-stg.local:3306/market?characterset=ut
 office_dao_url: jdbc:mysql://mysql.opinion-stg.local:3306/office?characterset=utf8
 internal_base_url: https://internal-opinion.s3.il-central-1.amazonaws.com
 private_domain: opinion.local
+external_domain: opinion.inqwise.com
