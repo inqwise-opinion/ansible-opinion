@@ -26,6 +26,21 @@
     discord_webhook_error_log: "{{ discord_webhooks.apilog | default(discord_webhooks.default) }}"
   tags: always
 
+- name: Consul Agent role
+  ansible.builtin.import_role:
+    name: inqwise.common.consul
+  vars:
+    consul_bind_addr: "{{ private_ip }}"
+    consul_retry_join: '["consul.{{ private_domain }}"]'
+    consul_datacenter: "{{ environment_name }}-dc-1"
+    consul_server: false
+    consul_ui: false
+    consul_services:
+      - name: "opinion-rest-api"
+        port: 8083
+      - name: "opinion-jetty"
+        port: 8080
+
 - name: Install Alloy
   include_role:
     name: alloy
