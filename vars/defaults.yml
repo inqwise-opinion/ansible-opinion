@@ -11,3 +11,4 @@ users:
     append: yes
 remote_app_content_list: []
 aws_iam_role: opinion-role
+private_ip: "{{ ansible_default_ipv4['address'] }}"
