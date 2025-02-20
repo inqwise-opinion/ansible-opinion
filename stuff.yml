@@ -37,8 +37,14 @@
     consul_ui: false
     consul_services:
       - name: "opinion-rest-api"
+        tags:
+          - "app"
+          - "rest-api"
         port: 8083
       - name: "opinion-jetty"
+        tags:
+          - "app"
+          - "jetty"
         port: 8080
 
 - name: Install Alloy

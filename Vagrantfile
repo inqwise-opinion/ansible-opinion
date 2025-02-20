@@ -22,6 +22,7 @@ Vagrant.configure("2") do |config|
     cd /vagrant
     export VAULT_PASSWORD=#{`op read "op://Security/ansible-vault inqwise-opinion-stg/password"`.strip!}
     echo "$VAULT_PASSWORD" > vault_password
+    export ANSIBLE_VERBOSITY=0
     if [ ! -f "main.sh" ]; then
     echo "Local main.sh not found. Download main.sh script from the URL..."
     curl -s https://raw.githubusercontent.com/inqwise/ansible-automation-toolkit/default/main_amzn2023.sh -o main.sh
