@@ -16,16 +16,6 @@
     name: inqwise.common.java
   tags: installation
 
-- name: Include opinion role
-  ansible.builtin.include_role:
-    name: opinion
-  vars:
-    user: "{{ app_user }}"
-    group: "{{ app_group }}"
-    collaboration_base: "{{ opinion_base_path }}"
-    discord_webhook_error_log: "{{ discord_webhooks.apilog | default(discord_webhooks.default) }}"
-  tags: always
-
 - name: Consul Agent role
   ansible.builtin.import_role:
     name: inqwise.common.consul
@@ -46,6 +36,16 @@
           - "app"
           - "jetty"
         port: 8080
+
+- name: Include opinion role
+  ansible.builtin.include_role:
+    name: opinion
+  vars:
+    user: "{{ app_user }}"
+    group: "{{ app_group }}"
+    collaboration_base: "{{ opinion_base_path }}"
+    discord_webhook_error_log: "{{ discord_webhooks.apilog | default(discord_webhooks.default) }}"
+  tags: always
 
 - name: Install Alloy
   include_role:
